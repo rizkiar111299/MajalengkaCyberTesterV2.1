@@ -9,9 +9,11 @@ import threading
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def crawl(url, depth=2):
+def crawl(url, depth=5, aggressive=True):
     visited = set()
     links = set()
+    folders = set()
+    files = set()
     lock = threading.Lock()
 
     def _crawl(url, current_depth):
@@ -22,7 +24,7 @@ def crawl(url, depth=2):
         
         try:
             logging.info(f"Crawling: {url} (Depth: {current_depth})")
-            response = requests.get(url)
+            response = requests.get(url, timeout=10)
             response.raise_for_status()  # Raise an HTTPError on bad status
             soup = BeautifulSoup(response.text, 'html.parser')
 
@@ -36,6 +38,10 @@ def crawl(url, depth=2):
                         if full_url not in visited:
                             links.add(full_url)
                             new_links.add((full_url, current_depth + 1))
+                            if is_folder(full_url):
+                                folders.add(full_url)
+                            else:
+                                files.add(full_url)
 
             # Check for directory listing by looking for common patterns
             if is_directory_listing(response.text):
@@ -46,6 +52,14 @@ def crawl(url, depth=2):
                             if full_url not in visited:
                                 links.add(full_url)
                                 new_links.add((full_url, current_depth + 1))
+                                if is_folder(full_url):
+                                    folders.add(full_url)
+                                else:
+                                    files.add(full_url)
+
+            # Aggressive mode: Extract additional info and deeper analysis
+            if aggressive:
+                extract_and_log_sensitive_info(soup, url)
 
             return new_links
 
@@ -59,7 +73,7 @@ def crawl(url, depth=2):
             logging.error(f"Error crawling {url}: {e}")
             return set()
 
-    with ThreadPoolExecutor(max_workers=10) as executor:  # You can adjust max_workers as needed
+    with ThreadPoolExecutor(max_workers=20 if aggressive else 10) as executor:  # Increase max_workers in aggressive mode
         futures = {executor.submit(_crawl, url, 0): url}
         while futures:
             for future in as_completed(futures):
@@ -70,7 +84,16 @@ def crawl(url, depth=2):
                             futures[executor.submit(_crawl, new_url, new_depth)] = new_url
                 del futures[future]
 
-    return links
+    logging.info(f"Total folders found: {len(folders)}")
+    for folder in folders:
+        logging.info(f"Folder: {folder}")
+
+    logging.info(f"Total files found: {len(files)}")
+    for file in files:
+        logging.info(f"File: {file}")
+
+    files_and_folders = [{"name": item, "type": "folder" if item in folders else "file", "size": "N/A"} for item in folders.union(files)]
+    return links, files_and_folders
 
 def is_directory_listing(html):
     """
@@ -98,3 +121,38 @@ def extract_links_from_directory_listing(html, base_url):
             full_url = urljoin(base_url, href)
             links.append(full_url)
     return links
+
+def is_folder(url):
+    """
+    Determine if a URL is a folder or a file.
+    """
+    parsed_url = urlparse(url)
+    path = parsed_url.path
+    return path.endswith('/') or not re.search(r'\.[a-zA-Z0-9]+$', path)
+
+def extract_and_log_sensitive_info(soup, url):
+    """
+    Extract and log sensitive information from the page.
+    """
+    # Example: Extract email addresses
+    emails = set(re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', soup.text))
+    if emails:
+        logging.info(f"Found emails on {url}: {emails}")
+
+    # Example: Extract phone numbers
+    phone_numbers = set(re.findall(r'\+?\d[\d -]{8,}\d', soup.text))
+    if phone_numbers:
+        logging.info(f"Found phone numbers on {url}: {phone_numbers}")
+
+    # Example: Extract any other sensitive information based on patterns
+    sensitive_patterns = [
+        r'\bpassword\b',
+        r'\bsecret\b',
+        r'\btoken\b',
+        r'\bkey\b'
+    ]
+    for pattern in sensitive_patterns:
+        matches = set(re.findall(pattern, soup.text, re.IGNORECASE))
+        if matches:
+            logging.info(f"Found sensitive info on {url}: {matches}")
+

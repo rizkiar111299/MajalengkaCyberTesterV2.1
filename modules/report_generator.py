@@ -1,6 +1,12 @@
 import os
 from jinja2 import Template
 from collections import Counter
+import datetime
+import webbrowser
+import re
+
+def sanitize_filename(filename):
+    return re.sub(r'[<>:"/\\|?*]+', '_', filename)
 
 def generate_report(url, info, vulnerabilities, open_ports):
     report_template = """
@@ -8,6 +14,7 @@ def generate_report(url, info, vulnerabilities, open_ports):
     <head>
         <title>Security Report for {{ url }}</title>
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -42,7 +49,7 @@ def generate_report(url, info, vulnerabilities, open_ports):
             </div>
             
             <h2>Information Gathering</h2>
-            <table class="table table-striped">
+            <table id="info-table" class="table table-striped">
                 <thead>
                     <tr>
                         <th>Key</th>
@@ -60,7 +67,7 @@ def generate_report(url, info, vulnerabilities, open_ports):
             </table>
             
             <h2>Open Ports</h2>
-            <table class="table table-striped">
+            <table id="ports-table" class="table table-striped">
                 <thead>
                     <tr>
                         <th>Port</th>
@@ -85,7 +92,7 @@ def generate_report(url, info, vulnerabilities, open_ports):
                 </div>
                 {% endfor %}
             </div>
-            <table class="table table-striped">
+            <table id="vuln-table" class="table table-striped">
                 <thead>
                     <tr>
                         <th>URL</th>
@@ -106,17 +113,33 @@ def generate_report(url, info, vulnerabilities, open_ports):
                 </tbody>
             </table>
         </div>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#info-table').DataTable();
+                $('#ports-table').DataTable();
+                $('#vuln-table').DataTable();
+            });
+        </script>
     </body>
     </html>
     """
-
+    tanggal = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     vuln_counts = Counter(vuln[1] for vuln in vulnerabilities)
 
     template = Template(report_template)
     report_html = template.render(url=url, info=info, vulnerabilities=vulnerabilities, open_ports=open_ports, vuln_counts=vuln_counts)
 
-    report_path = os.path.join(os.getcwd(), "security_report.html")
+    sanitized_url = sanitize_filename(url)
+    report_dir = os.path.join(os.getcwd(), "report")
+    os.makedirs(report_dir, exist_ok=True)
+    report_path = os.path.join(report_dir, f"{sanitized_url}_{tanggal}.html")
+
     with open(report_path, "w") as report_file:
         report_file.write(report_html)
     
     print(f"Report generated: {report_path}")
+
+    # Buka laporan di browser default untuk mencetak
+    webbrowser.open(f"file://{report_path}")

