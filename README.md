@@ -31,7 +31,8 @@ Penggunaan 🛠️
 
 Output 📋
 
-![image](https://github.com/user-attachments/assets/0195baee-97f4-470f-98b1-b2938d712bc4)
+![image](https://github.com/user-attachments/assets/5d32cc2d-e854-4456-8c38-7e213ea3e93c)
+
 
 
 Alat ini memberikan output terperinci dari setiap langkah, termasuk:
