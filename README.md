@@ -18,7 +18,7 @@ Clone repositori atau unduh skrip ini.
 
 Instal paket Python yang diperlukan:
 
-    pip install argparse logging tqdm colorama tabulate
+    pip install argparse logging tqdm colorama tabulate jinja2 collections datetime requests BeautifulSoup warnings certifi time retrying tabulate re threading textwrap
 
 Argumen
 
@@ -27,6 +27,7 @@ Argumen
     --depth <n>: Kedalaman perayapan (default: 3).
 Penggunaan 🛠️
     
+    python main.py example.com
     python main.py <url> [--verbose] [--depth <n>]
 
 Output 📋
