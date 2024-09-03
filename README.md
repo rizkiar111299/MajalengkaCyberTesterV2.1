@@ -1,5 +1,8 @@
 Majalengka Cyber Tester 🚀
 
+![image](https://github.com/user-attachments/assets/50c109e1-62c3-431e-b5a7-9284a990f920)
+
+
 Majalengka Cyber Tester adalah alat uji keamanan web yang dirancang untuk mengidentifikasi kerentanan dalam aplikasi web. Alat ini melakukan pengumpulan informasi, pemindaian port, perayapan web, pengujian keamanan, dan menghasilkan laporan terperinci.
 Fitur Utama 🌟
 
@@ -27,6 +30,9 @@ Penggunaan 🛠️
     python main.py <url> [--verbose] [--depth <n>]
 
 Output 📋
+
+![image](https://github.com/user-attachments/assets/0195baee-97f4-470f-98b1-b2938d712bc4)
+
 
 Alat ini memberikan output terperinci dari setiap langkah, termasuk:
 
