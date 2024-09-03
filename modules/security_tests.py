@@ -5,8 +5,10 @@ import warnings
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import logging
 import certifi
-from urllib.parse import urljoin, quote
+from urllib.parse import urljoin, urlparse, parse_qs
 import time
+from retrying import retry
+from tabulate import tabulate
 
 # Suppress the specific warning if it appears
 warnings.filterwarnings("ignore", category=UserWarning, message="The input looks more like a filename than markup")
@@ -25,9 +27,24 @@ HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
 }
 
+# Session management to reuse connections
+session = requests.Session()
+session.headers.update(HEADERS)
+session.mount('http://', requests.adapters.HTTPAdapter(pool_maxsize=1000))
+session.mount('https://', requests.adapters.HTTPAdapter(pool_maxsize=1000))
+
+# Retry strategy
+@retry(stop_max_attempt_number=MAX_RETRIES, wait_exponential_multiplier=1000, wait_exponential_max=10000)
+def request_with_retry(method, url, **kwargs):
+    return session.request(method, url, timeout=REQUEST_TIMEOUT, verify=certifi.where(), **kwargs)
+
+def looks_like_html(content):
+    """Check if the content looks like HTML."""
+    return '<html' in content.lower() and '</html>' in content.lower()
+
 def run_tests(url, links):
     vulnerabilities = []
-    with ThreadPoolExecutor(max_workers=10) as executor:
+    with ThreadPoolExecutor(max_workers=12) as executor:
         futures = [
             executor.submit(test_sql_injection, url, links),
             executor.submit(test_xss_injection, url, links),
@@ -36,7 +53,11 @@ def run_tests(url, links):
             executor.submit(test_directory_traversal, url, links),
             executor.submit(test_rfi, url, links),
             executor.submit(test_lfi, url, links),
-            executor.submit(test_idor, url, links)
+            executor.submit(test_idor, url, links),
+            executor.submit(test_csrf, url, links),
+            executor.submit(test_open_redirect, url, links),
+            executor.submit(test_security_misconfiguration, url, links),
+            executor.submit(test_sensitive_data_exposure, url, links)
         ]
 
         for future in as_completed(futures):
@@ -48,7 +69,7 @@ def run_tests(url, links):
     return vulnerabilities
 
 def test_sql_injection(url, links):
-    sql_payloads = ["' OR '1'='1", "' OR '1'='1' --", "' OR 1=1 --"]
+    sql_payloads = ["' OR '1'='1", "' OR '1'='1' --", "' OR 1=1 --", "' OR '1'='1"]
     return test_injection(url, links, sql_payloads, "sql")
 
 def test_xss_injection(url, links):
@@ -64,10 +85,10 @@ def test_brute_force(url):
     vulnerabilities = []
 
     # Assuming the login form is at /login
-    login_url = url + "/login"
+    login_url = urljoin(url, "/login")
 
     try:
-        response = requests.get(login_url, headers=HEADERS, timeout=REQUEST_TIMEOUT, verify=certifi.where())
+        response = request_with_retry('GET', login_url)
         if response.status_code == 200 and "text/html" in response.headers.get("Content-Type", ""):
             if looks_like_html(response.text):
                 soup = BeautifulSoup(response.text, 'html.parser')
@@ -79,7 +100,7 @@ def test_brute_force(url):
                         futures = []
                         for username, password in brute_force_payloads:
                             data = {input_tag['name']: username if 'user' in input_tag['name'].lower() else password for input_tag in form_details['inputs'] if input_tag['name']}
-                            futures.append(executor.submit(submit_form, form_details, url, data))
+                            futures.append(executor.submit(submit_form, form_details, login_url, data))
 
                         for future in as_completed(futures):
                             try:
@@ -116,6 +137,22 @@ def test_idor(url, links):
     idor_payloads = ["?user_id=1", "?account_id=1"]
     return test_injection(url, links, idor_payloads, "idor")
 
+def test_csrf(url, links):
+    csrf_payloads = ["<form action='{}' method='POST'><input type='hidden' name='csrf_token' value='fake_token'></form>".format(url)]
+    return test_injection(url, links, csrf_payloads, "csrf")
+
+def test_open_redirect(url, links):
+    open_redirect_payloads = ["http://evil.com"]
+    return test_injection(url, links, open_redirect_payloads, "open_redirect")
+
+def test_security_misconfiguration(url, links):
+    misconfiguration_payloads = ["/.git", "/.env", "/config.php"]
+    return test_injection(url, links, misconfiguration_payloads, "security_misconfiguration")
+
+def test_sensitive_data_exposure(url, links):
+    sensitive_data_payloads = ["/backup.sql", "/database.sql", "/dump.sql"]
+    return test_injection(url, links, sensitive_data_payloads, "sensitive_data_exposure")
+
 def test_injection(url, links, payloads, test_type):
     vulnerabilities = []
 
@@ -136,89 +173,112 @@ def test_injection(url, links, payloads, test_type):
     return vulnerabilities
 
 def test_payload(url, link, payload, test_type):
-    full_url = urljoin(link, quote(payload, safe=''))
-    for attempt in range(MAX_RETRIES):
-        try:
-            response = requests.get(full_url, headers=HEADERS, timeout=REQUEST_TIMEOUT, verify=certifi.where())
-            if response.status_code == 200:
-                if test_type == "sql" and ("syntax error" in response.text.lower() or "mysql" in response.text.lower()):
-                    return (full_url, "SQL Injection", payload, "GET")
-                elif test_type == "xss" and payload in response.text:
-                    return (full_url, "XSS Injection", payload, "GET")
-                elif test_type == "command" and ("root" in response.text.lower() or "bin" in response.text.lower()):
-                    return (full_url, "Command Injection", payload, "GET")
-                elif test_type == "traversal" and ("root:x" in response.text or "[extensions]" in response.text):
-                    return (full_url, "Directory Traversal", payload, "GET")
-                elif test_type == "rfi" and ("shell" in response.text):
-                    return (full_url, "Remote File Inclusion", payload, "GET")
-                elif test_type == "lfi" and ("root:x" in response.text or "[extensions]" in response.text):
-                    return (full_url, "Local File Inclusion", payload, "GET")
-                elif test_type == "idor" and ("user" in response.text or "account" in response.text):
-                    return (full_url, "Insecure Direct Object References", payload, "GET")
+    parsed_url = urlparse(link)
+    query_params = parse_qs(parsed_url.query)
+    base_url = parsed_url.scheme + "://" + parsed_url.netloc + parsed_url.path
 
-            response = requests.get(link, headers=HEADERS, timeout=REQUEST_TIMEOUT, verify=certifi.where())
-            if response.status_code == 200 and "text/html" in response.headers.get("Content-Type", ""):
-                if looks_like_html(response.text):
-                    soup = BeautifulSoup(response.text, 'html.parser')
-                    forms = soup.find_all('form')
-                    for form in forms:
-                        form_details = get_form_details(form)
-                        if form_details:
-                            data = {input_tag['name']: payload for input_tag in form_details['inputs'] if input_tag['name']}
-                            form_response = submit_form(form_details, url, data)
-                            if form_response and form_response.status_code == 200:
-                                if test_type == "sql" and ("syntax error" in form_response.text.lower() or "mysql" in form_response.text.lower()):
-                                    return (full_url, "SQL Injection", payload, form_details['method'].upper())
-                                elif test_type == "xss" and payload in form_response.text:
-                                    return (full_url, "XSS Injection", payload, form_details['method'].upper())
-                                elif test_type == "command" and ("root" in form_response.text.lower() or "bin" in form_response.text.lower()):
-                                    return (full_url, "Command Injection", payload, form_details['method'].upper())
-                                elif test_type == "traversal" and ("root:x" in form_response.text or "[extensions]" in form_response.text):
-                                    return (full_url, "Directory Traversal", payload, form_details['method'].upper())
-                                elif test_type == "rfi" and ("shell" in form_response.text):
-                                    return (full_url, "Remote File Inclusion", payload, form_details['method'].upper())
-                                elif test_type == "lfi" and ("root:x" in form_response.text or "[extensions]" in form_response.text):
-                                    return (full_url, "Local File Inclusion", payload, form_details['method'].upper())
-                                elif test_type == "idor" and ("user" in form_response.text or "account" in form_response.text):
-                                    return (full_url, "Insecure Direct Object References", payload, form_details['method'].upper())
-        except requests.exceptions.RequestException as e:
-            # Suppress output for specific SSL errors
-            if "SSL" not in str(e):
-                logging.error(f"Error during {test_type} test for {full_url}: {e}")
-            time.sleep(2 ** attempt)  # Exponential backoff
+    for param in query_params:
+        original_value = query_params[param]
+        query_params[param] = payload
+        full_url = base_url + "?" + "&".join(f"{k}={v[0]}" for k, v in query_params.items())  # Manually construct query string
+        query_params[param] = original_value  # Restore original value
+
+        for attempt in range(MAX_RETRIES):
+            try:
+                response = request_with_retry('GET', full_url)
+                if response.status_code == 200:
+                    if test_type == "sql" and ("syntax error" in response.text.lower() or "mysql" in response.text.lower()):
+                        return (full_url, "SQL Injection", payload, "GET")
+                    elif test_type == "xss" and payload in response.text:
+                        return (full_url, "XSS Injection", payload, "GET")
+                    elif test_type == "command" and ("root" in response.text.lower() or "bin" in response.text.lower()):
+                        return (full_url, "Command Injection", payload, "GET")
+                    elif test_type == "traversal" and ("root:x" in response.text or "[extensions]" in response.text):
+                        return (full_url, "Directory Traversal", payload, "GET")
+                    elif test_type == "rfi" and ("shell" in response.text):
+                        return (full_url, "Remote File Inclusion", payload, "GET")
+                    elif test_type == "lfi" and ("root:x" in response.text or "[extensions]" in response.text):
+                        return (full_url, "Local File Inclusion", payload, "GET")
+                    elif test_type == "idor" and ("user" in response.text or "account" in response.text):
+                        return (full_url, "Insecure Direct Object References", payload, "GET")
+                    elif test_type == "csrf" and ("csrf" in response.text.lower()):
+                        return (full_url, "Cross-Site Request Forgery", payload, "GET")
+                    elif test_type == "open_redirect" and ("http://evil.com" in response.url):
+                        return (full_url, "Open Redirect", payload, "GET")
+                    elif test_type == "security_misconfiguration" and ("config" in response.text.lower() or "env" in response.text.lower()):
+                        return (full_url, "Security Misconfiguration", payload, "GET")
+                    elif test_type == "sensitive_data_exposure" and ("database" in response.text.lower() or "backup" in response.text.lower()):
+                        return (full_url, "Sensitive Data Exposure", payload, "GET")
+
+                response = request_with_retry('GET', link)
+                if response.status_code == 200 and "text/html" in response.headers.get("Content-Type", ""):
+                    if looks_like_html(response.text):
+                        soup = BeautifulSoup(response.text, 'html.parser')
+                        forms = soup.find_all('form')
+                        for form in forms:
+                            form_details = get_form_details(form)
+                            if form_details:
+                                data = {input_tag['name']: payload for input_tag in form_details['inputs'] if input_tag['name']}
+                                form_response = submit_form(form_details, url, data)
+                                if form_response and form_response.status_code == 200:
+                                    if test_type == "sql" and ("syntax error" in form_response.text.lower() or "mysql" in form_response.text.lower()):
+                                        return (full_url, "SQL Injection", payload, form_details['method'].upper())
+                                    elif test_type == "xss" and payload in form_response.text:
+                                        return (full_url, "XSS Injection", payload, form_details['method'].upper())
+                                    elif test_type == "command" and ("root" in form_response.text.lower() or "bin" in form_response.text.lower()):
+                                        return (full_url, "Command Injection", payload, form_details['method'].upper())
+                                    elif test_type == "traversal" and ("root:x" in form_response.text or "[extensions]" in form_response.text):
+                                        return (full_url, "Directory Traversal", payload, form_details['method'].upper())
+                                    elif test_type == "rfi" and ("shell" in form_response.text):
+                                        return (full_url, "Remote File Inclusion", payload, form_details['method'].upper())
+                                    elif test_type == "lfi" and ("root:x" in form_response.text or "[extensions]" in form_response.text):
+                                        return (full_url, "Local File Inclusion", payload, form_details['method'].upper())
+                                    elif test_type == "idor" and ("user" in form_response.text or "account" in form_response.text):
+                                        return (full_url, "Insecure Direct Object References", payload, form_details['method'].upper())
+                                    elif test_type == "csrf" and ("csrf" in form_response.text.lower()):
+                                        return (full_url, "Cross-Site Request Forgery", payload, form_details['method'].upper())
+                                    elif test_type == "open_redirect" and ("http://evil.com" in form_response.url):
+                                        return (full_url, "Open Redirect", payload, form_details['method'].upper())
+                                    elif test_type == "security_misconfiguration" and ("config" in form_response.text.lower() or "env" in form_response.text.lower()):
+                                        return (full_url, "Security Misconfiguration", payload, form_details['method'].upper())
+                                    elif test_type == "sensitive_data_exposure" and ("database" in form_response.text.lower() or "backup" in form_response.text.lower()):
+                                        return (full_url, "Sensitive Data Exposure", payload, form_details['method'].upper())
+            except requests.exceptions.RequestException as e:
+                # Suppress output for specific SSL errors
+                if "SSL" not in str(e):
+                    logging.error(f"RequestException: {e}")
+                time.sleep(2 ** attempt)  # Exponential backoff
 
     return None
 
 def get_form_details(form):
+    """Extract form details such as action, method, and inputs."""
     details = {}
-    action = form.attrs.get('action')
-    method = form.attrs.get('method', 'get').lower()
+    action = form.attrs.get("action")
+    method = form.attrs.get("method", "get").lower()
     inputs = []
-    for input_tag in form.find_all('input'):
-        input_name = input_tag.attrs.get('name')
-        input_type = input_tag.attrs.get('type', 'text')
-        input_value = input_tag.attrs.get('value', '')
-        inputs.append({'name': input_name, 'type': input_type, 'value': input_value})
-    details['action'] = action if action else ""
-    details['method'] = method
-    details['inputs'] = inputs
+
+    for input_tag in form.find_all("input"):
+        input_name = input_tag.attrs.get("name")
+        input_type = input_tag.attrs.get("type", "text")
+        input_value = input_tag.attrs.get("value", "")
+        inputs.append({"name": input_name, "type": input_type, "value": input_value})
+
+    details["action"] = action
+    details["method"] = method
+    details["inputs"] = inputs
     return details
 
 def submit_form(form_details, url, data):
-    target_url = urljoin(url, form_details['action']) if form_details['action'] else url
-    try:
-        if form_details['method'] == 'post':
-            return requests.post(target_url, headers=HEADERS, data=data, timeout=REQUEST_TIMEOUT, verify=certifi.where())
-        else:
-            return requests.get(target_url, headers=HEADERS, params=data, timeout=REQUEST_TIMEOUT, verify=certifi.where())
-    except requests.exceptions.RequestException as e:
-        logging.error(f"Error submitting form to {target_url}: {e}")
-        return None
+    """Submit a form and return the response."""
+    target_url = urljoin(url, form_details["action"])
+    if form_details["method"] == "post":
+        return request_with_retry("POST", target_url, data=data)
+    else:
+        return request_with_retry("GET", target_url, params=data)
 
-def looks_like_html(text):
-    """
-    Helper function to check if a given text looks like HTML.
-    """
-    if not isinstance(text, str):
-        return False
-    return bool(BeautifulSoup(text, "html.parser").find())
+def print_vulnerabilities(vulnerabilities):
+    """Print the vulnerabilities in a tabulated format."""
+    headers = ["URL", "Payload", "Method", "Type"]
+    table = tabulate(vulnerabilities, headers, tablefmt="grid")
+    print(table)
