@@ -4,12 +4,21 @@ from modules import info_gathering, web_crawler, security_tests, report_generato
 from tqdm import tqdm
 from colorama import init, Fore, Style
 from tabulate import tabulate
+import textwrap
 
 # Initialize colorama
 init(autoreset=True)
 
 def display_info(info):
-    table = [[key, value] for key, value in info.items()]
+    table = []
+    for key, value in info.items():
+        if isinstance(value, dict):
+            value = "\n".join([f"{k}: {v}" for k, v in value.items()])
+        elif isinstance(value, list):
+            value = "\n".join(value)
+        elif isinstance(value, str) and len(value) > 80:
+            value = textwrap.fill(value, width=80)
+        table.append([key, value])
     print(Fore.CYAN + Style.BRIGHT + tabulate(table, headers=["Key", "Value"], tablefmt="grid"))
 
 def display_vulnerabilities(vulnerabilities):
@@ -28,7 +37,8 @@ def display_open_ports(open_ports):
 
 def display_links(links):
     if links:
-        table = [[link] for link in links]
+        wrapped_links = [textwrap.fill(link, width=80) for link in links]
+        table = [[link] for link in wrapped_links]
         print(Fore.BLUE + Style.BRIGHT + tabulate(table, headers=["Links"], tablefmt="grid"))
     else:
         print(Fore.GREEN + "No links found.")
@@ -48,7 +58,7 @@ def main():
     # Header
     header = f"""
 {Fore.MAGENTA + Style.BRIGHT}
-	   .---------       `---------.      `.-://::.``---  .----------------`    
+       .---------       `---------.      `.-://::.``---  .----------------`    
    sddddddddd:      oddddddddd/    .+yddmmmmmdhsddd` +dddddddddddddddd:    
    :+smmdymmmd.    /mmhhmmmdo+-  `odmmmdho++oydmmmd` ommh++ymmmms++dmm:    
      -mmh.dmmmy`  .dmd.smmmd`    smmmmh-      .yddd` omms  ommmm:  hmm:    
@@ -59,7 +69,7 @@ def main():
    :osmmdoo. -dmmm/  +ohmmmmoo-  `ommmmmdysoyhmmmd/     -oohmmmmsoo`       
    ommmmmmm:  /mms   dmmmmmmmm/    .+ydmmmmmmmdy/`      /mmmmmmmmmd`       
    .-------`   --`   ---------`      ``.-::-..`         `---------- 
-	<=- Majalengka Cyber Tester -=>
+    <=- Majalengka Cyber Tester -=>
 {Style.RESET_ALL}
 {Fore.WHITE + Style.BRIGHT}
 Usage:
@@ -81,7 +91,7 @@ Options:
     print(Fore.YELLOW + "Step 1: Information Gathering")
     info = info_gathering.gather_info(url)
     display_info(info)
-    print(Fore.GREEN + "Information Gathering Completed")
+    print(Fore.GREEN + "Information Gathering Completed\n")
 
     # Step 2: Port Scanning
     print(Fore.YELLOW + "Step 2: Port Scanning")
@@ -89,24 +99,24 @@ Options:
     common_ports = [21, 22, 23, 25, 53, 80, 110, 143, 443, 445, 8080]
     open_ports = port_scanner.scan_ports(host, common_ports)
     display_open_ports(open_ports)
-    print(Fore.GREEN + "Port Scanning Completed")
+    print(Fore.GREEN + "Port Scanning Completed\n")
 
     # Step 3: Web Crawling
     print(Fore.YELLOW + "Step 3: Web Crawling")
     links = web_crawler.crawl(url, depth)
     display_links(links)
-    print(Fore.GREEN + "Web Crawling Completed")
+    print(Fore.GREEN + "Web Crawling Completed\n")
 
     # Step 4: Security Tests
     print(Fore.YELLOW + "Step 4: Security Tests")
     vulnerabilities = security_tests.run_tests(url, links)
     display_vulnerabilities(vulnerabilities)
-    print(Fore.GREEN + "Security Tests Completed")
+    print(Fore.GREEN + "Security Tests Completed\n")
 
     # Step 5: Generate Report
     print(Fore.YELLOW + "Step 5: Generating Report")
     report_generator.generate_report(url, info, vulnerabilities, open_ports)
-    print(Fore.GREEN + "Report Generated Successfully")
+    print(Fore.GREEN + "Report Generated Successfully\n")
 
 if __name__ == "__main__":
     main()

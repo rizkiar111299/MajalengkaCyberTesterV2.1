@@ -7,7 +7,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import threading
 
 # Configure logging
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def crawl(url, depth=2):
     visited = set()
@@ -19,7 +19,9 @@ def crawl(url, depth=2):
             return set()
         with lock:
             visited.add(url)
+        
         try:
+            logging.info(f"Crawling: {url} (Depth: {current_depth})")
             response = requests.get(url)
             response.raise_for_status()  # Raise an HTTPError on bad status
             soup = BeautifulSoup(response.text, 'html.parser')
@@ -47,6 +49,12 @@ def crawl(url, depth=2):
 
             return new_links
 
+        except requests.HTTPError as e:
+            if e.response.status_code == 404:
+                logging.warning(f"404 Not Found: {url}")
+            else:
+                logging.error(f"HTTP error: {e} - URL: {url}")
+            return set()
         except requests.RequestException as e:
             logging.error(f"Error crawling {url}: {e}")
             return set()
