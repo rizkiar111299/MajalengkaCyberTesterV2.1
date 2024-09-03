@@ -1,10 +1,11 @@
 import argparse
 import logging
-from modules import info_gathering, web_crawler, security_tests, report_generator, port_scanner
-from tqdm import tqdm
+import textwrap
+
 from colorama import init, Fore, Style
 from tabulate import tabulate
-import textwrap
+
+from modules import info_gathering, web_crawler, security_tests, report_generator, port_scanner
 
 # Initialize colorama
 init(autoreset=True)
@@ -42,6 +43,13 @@ def display_links(links):
         print(Fore.BLUE + Style.BRIGHT + tabulate(table, headers=["Links"], tablefmt="grid"))
     else:
         print(Fore.GREEN + "No links found.")
+
+def display_files_and_folders(files_and_folders):
+    if files_and_folders:
+        table = [[item['name'], item['type'], item['size']] for item in files_and_folders]
+        print(Fore.MAGENTA + Style.BRIGHT + tabulate(table, headers=["Name", "Type", "Size"], tablefmt="grid"))
+    else:
+        print(Fore.GREEN + "No files or folders found.")
 
 def main():
     parser = argparse.ArgumentParser(description="Web Security Tester Tool")
@@ -85,7 +93,7 @@ Options:
     url = args.url
     depth = args.depth
 
-    print(Fore.CYAN + Style.BRIGHT + f"Starting security tests for {url}")
+    print(Fore.CYAN + Style.BRIGHT + f"Starting security tests for {url}\n")
 
     # Step 1: Information Gathering
     print(Fore.YELLOW + "Step 1: Information Gathering")
@@ -103,8 +111,9 @@ Options:
 
     # Step 3: Web Crawling
     print(Fore.YELLOW + "Step 3: Web Crawling")
-    links = web_crawler.crawl(url, depth)
+    links, files_and_folders = web_crawler.crawl(url, depth)
     display_links(links)
+    display_files_and_folders(files_and_folders)
     print(Fore.GREEN + "Web Crawling Completed\n")
 
     # Step 4: Security Tests
