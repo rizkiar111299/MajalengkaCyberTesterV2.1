@@ -4,8 +4,12 @@ import textwrap
 
 from colorama import init, Fore, Style
 from tabulate import tabulate
+import urllib3
 
 from modules import info_gathering, web_crawler, security_tests, report_generator, port_scanner
+
+# Disable SSL warnings
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Initialize colorama
 init(autoreset=True)

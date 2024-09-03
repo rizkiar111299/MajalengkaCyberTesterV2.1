@@ -24,9 +24,14 @@ def crawl(url, depth=5, aggressive=True):
         
         try:
             logging.info(f"Crawling: {url} (Depth: {current_depth})")
-            response = requests.get(url, timeout=10)
+            response = requests.get(url, timeout=10, verify=False)
             response.raise_for_status()  # Raise an HTTPError on bad status
-            soup = BeautifulSoup(response.text, 'html.parser')
+
+            # Check encoding and set it if not detected
+            if response.encoding is None:
+                response.encoding = 'utf-8'
+            
+            soup = BeautifulSoup(response.text, 'lxml')  # Use 'lxml' parser
 
             # Extract links using BeautifulSoup
             new_links = set()
@@ -155,4 +160,3 @@ def extract_and_log_sensitive_info(soup, url):
         matches = set(re.findall(pattern, soup.text, re.IGNORECASE))
         if matches:
             logging.info(f"Found sensitive info on {url}: {matches}")
-

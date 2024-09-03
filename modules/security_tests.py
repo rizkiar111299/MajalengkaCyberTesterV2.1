@@ -20,7 +20,7 @@ logging.basicConfig(level=logging.WARNING, format='%(asctime)s - %(levelname)s -
 REQUEST_TIMEOUT = 100  # seconds
 
 # Define maximum retries
-MAX_RETRIES = 10
+MAX_RETRIES = 100
 
 # Define User-Agent header
 HEADERS = {
